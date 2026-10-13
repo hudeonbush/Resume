@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Strain Engineering of WSe2 · 李聃 Alan Li</title>
+<style>
+:root {
+  --bg: #fdfdfc; --surface: #ffffff; --text: #1c1e26; --soft: #4a4f5e;
+  --muted: #828897; --border: #e8e8e3; --accent: #2f5fd0; --accent-soft: rgba(47,95,208,.08);
+  --nav-h: 58px;
+  --serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #131417; --surface: #1b1d22; --text: #e7e8ec; --soft: #c0c4cf;
+  --muted: #8a90a0; --border: #2b2e36; --accent: #7da2ff; --accent-soft: rgba(125,162,255,.12);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.8; font-size:15.5px; transition:background .3s,color .3s; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; text-underline-offset:3px; }
+.wrap { max-width:820px; margin:0 auto; padding:0 22px; }
+.nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:820px; margin:0 auto; height:100%; padding:0 22px; display:flex; align-items:center; justify-content:space-between; }
+.back { font-size:.88rem; font-weight:600; color:var(--soft); }
+.back:hover { color:var(--accent); text-decoration:none; }
+.nav-right { display:flex; gap:8px; }
+.nav-btn { padding:5px 12px; font-size:.8rem; font-weight:600; color:var(--soft); background:transparent; border:1px solid var(--border); border-radius:999px; cursor:pointer; font-family:var(--sans); }
+.nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+article { padding:calc(var(--nav-h) + 40px) 0 60px; }
+.p-venue { font-size:.82rem; font-weight:600; color:var(--accent); letter-spacing:.04em; margin-bottom:10px; }
+h1 { font-family:var(--serif); font-size:1.6rem; line-height:1.45; margin-bottom:12px; }
+.pills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+.pill { font-size:.74rem; font-weight:600; padding:3px 12px; border-radius:999px; background:var(--accent-soft); color:var(--accent); }
+.pill.review { background:rgba(217,119,6,.1); color:#d97706; }
+.authors { font-size:.9rem; color:var(--muted); margin-bottom:4px; }
+.authors .me { color:var(--accent); font-weight:700; }
+.venue-line { font-size:.9rem; color:var(--soft); font-style:italic; margin-bottom:20px; }
+.ext-link { display:inline-flex; align-items:center; gap:6px; font-size:.88rem; font-weight:600; color:var(--accent); border:1px solid var(--accent); padding:8px 18px; border-radius:999px; margin-bottom:26px; transition:all .2s; }
+.ext-link:hover { background:var(--accent); color:#fff; text-decoration:none; }
+.ext-link.disabled { color:var(--muted); border-color:var(--border); pointer-events:none; }
+figure { margin:0 0 30px; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--surface); }
+figure img { display:block; width:100%; height:auto; }
+figcaption { padding:10px 16px; font-size:.8rem; color:var(--muted); border-top:1px solid var(--border); }
+h2 { font-family:var(--serif); font-size:1.15rem; margin:26px 0 10px; padding-left:12px; border-left:3px solid var(--accent); }
+h2 .h-en { font-family:var(--sans); font-size:.75rem; font-weight:500; color:var(--muted); margin-left:8px; letter-spacing:.05em; text-transform:uppercase; }
+section p { color:var(--soft); font-size:.95rem; text-align:justify; }
+.l-en { display:none; }
+html[data-lang="en"] .l-zh { display:none; }
+html[data-lang="en"] .l-en { display:block; }
+footer { border-top:1px solid var(--border); padding:22px 0 30px; margin-top:30px; color:var(--muted); font-size:.84rem; display:flex; justify-content:space-between; }
+@media (max-width:640px) { h1 { font-size:1.32rem; } }
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-inner">
+  <a href="../publications.html" class="back"><span class="l-zh">← 返回论文列表</span><span class="l-en">← Publications</span></a>
+  <div class="nav-right">
+    <button class="nav-btn" id="langToggle">EN</button>
+    <button class="nav-btn" id="themeToggle">◐</button>
+  </div>
+</div></header>
+<main class="wrap"><article>
+  <p class="p-venue">NANO RESEARCH · 2026</p>
+  <h1>Strain Engineering of Emergent Anisotropic Responses in WSe2 Monolayer</h1>
+  <div class="pills"><span class="pill"><span class="l-zh">合作作者</span><span class="l-en">Co-author</span></span><span class="pill"><span class="l-zh">中科院一区 Top</span><span class="l-en">CAS Q1 Top</span></span></div>
+  <p class="authors">Yang Du, Yuhao Kong, Shunhui Zhang, Jinhui Cao, Baihui Zhang, Junjie Jin, Yulong Tang, <span class="me">Dan Li</span>, Zhihui Chen, Jun He, et al.</p>
+  <p class="venue-line">Nano Research, 2026 · DOI: 10.26599/NR.2026.94908725</p>
+  <a class="ext-link" href="https://doi.org/10.26599/NR.2026.94908725" target="_blank" rel="noopener noreferrer"><span class="l-zh">查看原文 ↗</span><span class="l-en">Read the paper ↗</span></a>
+  <figure>
+    <img src="pub-wse2.jpg" alt="Graphical abstract" />
+    <figcaption><span class="l-zh">图形摘要（来源：期刊官网）</span><span class="l-en">Graphical abstract (source: publisher)</span></figcaption>
+  </figure>
+  <section>
+    <h2><span class="l-zh">研究背景</span><span class="l-en">Background</span></h2>
+    <p class="l-zh">应变工程是打破二维材料本征对称性、诱导可调各向异性响应的有效策略，但如何通过应变获得新型各向异性行为仍是一个挑战，且缺乏系统研究。</p>
+    <p class="l-en">Strain engineering is an effective strategy to break the intrinsic symmetry of two-dimensional materials and enable tunable anisotropic responses. However, achieving novel anisotropic behaviors through strain remains challenging and lacks systematic study.</p>
+  </section>
+  <section>
+    <h2><span class="l-zh">研究方法</span><span class="l-en">Methods</span></h2>
+    <p class="l-zh">将单层 WSe2 与 SiO2 纳米棒构筑 2D/1D 混合维异质结构，利用纳米棒直径精确调控 WSe2 中的应变；通过偏振分辨光致发光、压电力显微镜（PFM）等手段表征其各向异性光学与电学响应，并构筑光电探测器进行功能验证。</p>
+    <p class="l-en">Mixed-dimensional 2D/1D heterostructures were constructed from monolayer WSe2 and SiO2 nanorods, whose diameters precisely regulate the strain in WSe2. Polarization-resolved photoluminescence and piezoresponse force microscopy (PFM) were used to characterize the anisotropic optical and electrical responses, and heterostructure photodetectors were fabricated for functional demonstration.</p>
+  </section>
+  <section>
+    <h2><span class="l-zh">主要结论</span><span class="l-en">Conclusions</span></h2>
+    <p class="l-zh">应变界面处的 WSe2 表现出可调的光致发光增强、带隙调制与偏振发光，并意外观测到面内铁电性。异质结探测器覆盖 375–808 nm 宽波段，光开关比约 3200，探测率达 2.4×10⁹ Jones，响应速度约 11.3 ms，二向色比在 1–1.51 范围内可调，并可清晰成像字母“H”。该工作为调控 TMDC 各向异性响应并赋予其新功能提供了有效策略。</p>
+    <p class="l-en">Strained interfacial WSe2 exhibits tunable PL enhancement, bandgap modulation and polarized emission, with unexpected in-plane ferroelectricity. The photodetectors cover 375–808 nm broadband detection with a photoswitching ratio of ~3200, a detectivity of 2.4×10⁹ Jones, a response time of ~11.3 ms, and a tunable dichroic ratio from 1 to 1.51, reliably imaging the letter "H". This work offers an effective strategy for tailoring anisotropic responses of TMDCs and endowing them with new functionalities.</p>
+  </section>
+  <footer>
+    <span>© 2026 李聃 Alan Li</span>
+    <a href="../index.html"><span class="l-zh">返回主页</span><span class="l-en">Back to homepage</span></a>
+  </footer>
+</article></main>
+<script>
+(function () {
+  var LANG_KEY = "alan-site-lang", THEME_KEY = "alan-site-theme";
+  var lang = "zh";
+  try { lang = localStorage.getItem(LANG_KEY) || "zh"; } catch (e) {}
+  if (lang !== "zh" && lang !== "en") lang = "zh";
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.setAttribute("data-lang", l);
+    document.documentElement.setAttribute("lang", l === "zh" ? "zh-CN" : "en");
+    document.getElementById("langToggle").textContent = l === "zh" ? "EN" : "中";
+    try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+  }
+  applyLang(lang);
+  document.getElementById("langToggle").addEventListener("click", function () {
+    applyLang(lang === "zh" ? "en" : "zh");
+  });
+  function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem(THEME_KEY, t); } catch (e) {} }
+  var saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+  if (saved === "dark" || saved === "light") applyTheme(saved);
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) applyTheme("dark");
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+})();
+</script>
+</body>
+</html>

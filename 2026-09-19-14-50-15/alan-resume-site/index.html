@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>李聃 Alan Li</title>
+<meta name="description" content="李聃（Alan Li）· 个人学术主页" />
+<style>
+/* ==========================================================
+   配色（想换主题色改这里）
+   ========================================================== */
+:root {
+  --bg: #fdfdfc; --surface: #ffffff; --text: #1c1e26; --soft: #4a4f5e;
+  --muted: #828897; --border: #e8e8e3; --accent: #2f5fd0; --accent-soft: rgba(47,95,208,.08);
+  --radius: 12px; --nav-h: 58px;
+  --serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #131417; --surface: #1b1d22; --text: #e7e8ec; --soft: #c0c4cf;
+  --muted: #8a90a0; --border: #2b2e36; --accent: #7da2ff; --accent-soft: rgba(125,162,255,.12);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 20px); }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.75; font-size:15.5px; transition:background .3s,color .3s; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; text-underline-offset:3px; }
+ul { list-style:none; }
+.wrap { max-width:840px; margin:0 auto; padding:0 22px; }
+
+/* 导航 */
+.nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:840px; margin:0 auto; height:100%; padding:0 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.nav-name { font-family:var(--serif); font-weight:700; font-size:1.02rem; color:var(--text); }
+.nav-name:hover { text-decoration:none; color:var(--accent); }
+.nav-right { display:flex; align-items:center; gap:4px; }
+.nav-link { padding:6px 11px; font-size:.88rem; color:var(--muted); border-radius:8px; }
+.nav-link:hover { color:var(--text); background:var(--accent-soft); text-decoration:none; }
+.nav-link.active { color:var(--accent); }
+.nav-btn { margin-left:6px; padding:5px 12px; font-size:.8rem; font-weight:600; color:var(--soft); background:transparent; border:1px solid var(--border); border-radius:999px; cursor:pointer; font-family:var(--sans); transition:all .2s; }
+.nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+/* Hero */
+.hero { padding:calc(var(--nav-h) + 56px) 0 40px; }
+.hero-inner { display:grid; grid-template-columns:1fr 168px; gap:36px; align-items:start; }
+.hero h1 { font-family:var(--serif); font-size:2rem; line-height:1.3; margin-bottom:6px; }
+.hero h1 .en { font-size:1.1rem; color:var(--muted); font-family:var(--sans); font-weight:500; margin-left:10px; }
+.hero .bio { color:var(--soft); max-width:36em; margin-bottom:20px; }
+.hero-links { display:flex; flex-wrap:wrap; gap:10px; }
+.hero-links a { display:inline-flex; align-items:center; gap:6px; font-size:.86rem; font-weight:600; color:var(--soft); border:1px solid var(--border); padding:7px 15px; border-radius:999px; background:var(--surface); transition:all .2s; }
+.hero-links a:hover { border-color:var(--accent); color:var(--accent); text-decoration:none; transform:translateY(-2px); }
+.avatar { width:168px; height:168px; border-radius:16px; overflow:hidden; background:linear-gradient(135deg,#2f5fd0,#7c5cf6); display:grid; place-items:center; color:#fff; font-size:2.6rem; font-weight:800; font-family:var(--serif); border:1px solid var(--border); position:relative; }
+.avatar img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+/* 区块 */
+section { padding:30px 0; border-top:1px solid var(--border); }
+section:first-of-type { border-top:none; }
+.sec-title { font-family:var(--serif); font-size:1.28rem; margin-bottom:16px; display:flex; align-items:baseline; gap:10px; }
+.sec-title .en-sub { font-family:var(--sans); font-size:.78rem; font-weight:500; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; }
+
+/* 列表条目（教育/经历/项目通用） */
+.item { display:grid; grid-template-columns:130px 1fr; gap:14px; padding:11px 0; border-bottom:1px dashed var(--border); }
+.item:last-child { border-bottom:none; }
+.item .when { font-size:.83rem; color:var(--muted); padding-top:2px; white-space:nowrap; }
+.item .what { min-width:0; }
+.item .what b { font-weight:600; font-size:.97rem; }
+.item .what .role { color:var(--accent); font-weight:600; font-size:.88rem; }
+.item .what .desc { color:var(--muted); font-size:.88rem; margin-top:1px; }
+
+/* 论文列表 */
+.pub { padding:12px 0; border-bottom:1px dashed var(--border); }
+.pub:last-child { border-bottom:none; }
+.pub .p-title { font-weight:600; font-size:.96rem; line-height:1.55; }
+.pub .p-title a { color:var(--text); }
+.pub .p-title a:hover { color:var(--accent); }
+.pub .p-meta { font-size:.85rem; color:var(--muted); margin-top:2px; }
+.pub .p-meta .venue { font-style:italic; color:var(--soft); }
+.pill { font-size:.7rem; font-weight:600; padding:1px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); white-space:nowrap; margin-left:8px; }
+.pill.review { background:rgba(217,119,6,.1); color:#d97706; }
+
+/* 技能标签 */
+.tags { display:flex; flex-wrap:wrap; gap:7px; }
+.tag { font-size:.82rem; color:var(--soft); border:1px solid var(--border); background:var(--surface); padding:5px 13px; border-radius:999px; transition:all .2s; cursor:default; }
+.tag:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+/* 研究方向卡片 */
+.rlist { display:grid; gap:20px; }
+.rcard { display:grid; grid-template-columns:1fr 232px; gap:24px; align-items:start; padding:20px; border:1px solid var(--border); border-radius:var(--radius,12px); background:var(--surface); transition:border-color .25s, box-shadow .25s; }
+.rcard:hover { border-color:var(--accent); box-shadow:0 6px 20px rgba(0,0,0,.05); }
+.rcard .r-idx { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:7px; background:var(--accent-soft); color:var(--accent); font-size:.76rem; font-weight:700; margin-bottom:9px; }
+.rcard .r-title { font-family:var(--serif); font-size:1.04rem; font-weight:700; line-height:1.5; margin-bottom:7px; }
+.rcard .r-desc { font-size:.885rem; color:var(--soft); line-height:1.78; }
+.rcard .r-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.rcard .r-tags span { font-size:.72rem; color:var(--muted); border:1px solid var(--border); padding:2px 9px; border-radius:999px; white-space:nowrap; }
+.rcard .r-refs { margin-top:13px; padding-top:11px; border-top:1px dashed var(--border); }
+.rcard .r-refs .ref-h { font-size:.7rem; color:var(--muted); letter-spacing:.05em; margin-bottom:6px; }
+.rcard .r-refs a { display:block; font-size:.795rem; color:var(--soft); line-height:1.6; padding-left:11px; position:relative; margin-bottom:3px; }
+.rcard .r-refs a::before { content:""; position:absolute; left:0; top:.62em; width:4px; height:4px; border-radius:50%; background:var(--accent); opacity:.6; }
+.rcard .r-refs a:hover { color:var(--accent); text-decoration:none; }
+.rcard .r-fig { border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--bg); }
+.rcard .r-fig img { display:block; width:100%; height:158px; object-fit:cover; object-position:center; }
+@media (max-width:760px) {
+  .rcard { grid-template-columns:1fr; gap:16px; }
+  .rcard .r-fig img { height:190px; }
+}
+
+/* 关于/兴趣行 */
+.facts { color:var(--soft); font-size:.93rem; display:grid; gap:6px; }
+.facts b { color:var(--text); font-weight:600; }
+
+/* 页脚 */
+footer { border-top:1px solid var(--border); padding:26px 0 34px; margin-top:20px; color:var(--muted); font-size:.84rem; display:flex; justify-content:space-between; align-items:center; }
+footer .top-link { font-size:.84rem; }
+
+/* 入场动画 */
+.reveal { opacity:0; transform:translateY(16px); transition:opacity .6s,transform .6s; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* 响应式 */
+@media (max-width:640px) {
+  body { font-size:15px; }
+  .hero-inner { grid-template-columns:1fr; }
+  .avatar { width:120px; height:120px; font-size:2rem; }
+  .item { grid-template-columns:1fr; gap:1px; }
+  .item .when { white-space:normal; }
+  .nav-link { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-name" id="navName"></a>
+    <nav class="nav-right" id="navRight">
+      <a href="#education" class="nav-link" data-i18n="nav-edu"></a>
+      <a href="#experience" class="nav-link" data-i18n="nav-exp"></a>
+      <a href="publications.html" class="nav-link" data-i18n="nav-pub"></a>
+      <button class="nav-btn" id="langToggle" title="Switch language / 切换语言">EN</button>
+      <button class="nav-btn" id="themeToggle" title="深色/浅色">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+
+  <!-- 首屏 -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1 id="heroName"></h1>
+        <p class="bio" id="heroBio"></p>
+        <div class="hero-links" id="heroLinks"></div>
+      </div>
+      <div class="avatar" id="avatarBox">
+        <span id="avatarInitials">AL</span>
+        <img src="photo.png" alt="李聃 Alan Li" id="avatarImg" onerror="this.remove()" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 兴趣与研究领域 -->
+  <section id="about" class="reveal">
+    <h2 class="sec-title"><span data-i18n="sec-about"></span><span class="en-sub">Research Interests</span></h2>
+    <div class="rlist" id="researchList"></div>
+  </section>
+
+  <!-- 教育 -->
+  <section id="education" class="reveal">
+    <h2 class="sec-title"><span data-i18n="sec-edu"></span><span class="en-sub">Education</span></h2>
+    <div id="eduList"></div>
+  </section>
+
+  <!-- 经历 -->
+  <section id="experience" class="reveal">
+    <h2 class="sec-title"><span data-i18n="sec-exp"></span><span class="en-sub">Experience</span></h2>
+    <div id="expList"></div>
+  </section>
+
+  <!-- 项目 -->
+  <section id="projects" class="reveal">
+    <h2 class="sec-title"><span data-i18n="sec-proj"></span><span class="en-sub">Projects</span></h2>
+    <div id="projList"></div>
+  </section>
+
+  <!-- 技能 -->
+  <section id="skills" class="reveal">
+    <h2 class="sec-title"><span data-i18n="sec-skills"></span><span class="en-sub">Skills</span></h2>
+    <div class="tags" id="skillTags"></div>
+  </section>
+
+  <!-- 联系信息已并入首屏快捷入口与「关于我」，此处不再重复 -->
+  <footer>
+    <span id="footerText"></span>
+    <a href="#top" class="top-link" data-i18n="back-top"></a>
+  </footer>
+</main>
+
+<script>
+/* ================================================================
+   ★★★ 内容编辑区 ★★★
+   ----------------------------------------------------------------
+   【结构】所有文字分中文(zh) / 英文(en) 两份，成对修改；
+   页面右上角的 EN/中 按钮用来切换语言。
+   【修改】Ctrl+F 搜对应小节（如 "论文"），改引号里的文字，
+   保存后按 Ctrl+F5 强制刷新浏览器。
+   【新增条目】复制一段 { ... } 粘贴改内容，段间用英文逗号隔开。
+   【照片】把照片命名为 photo.png 放到本文件同目录即自动显示。
+   ================================================================ */
+
+/* ---- 界面固定文案（导航、标题等，一般不用改） ---- */
+const UI = {
+  "nav-edu":     { zh: "教育",   en: "Education" },
+  "nav-exp":     { zh: "经历",   en: "Experience" },
+  "nav-pub":     { zh: "论文",   en: "Publications" },
+  "sec-about":   { zh: "我的兴趣与研究领域", en: "Research Interests" },
+  "sec-edu":     { zh: "教育背景", en: "Education" },
+  "sec-exp":     { zh: "研究与工作经历", en: "Experience" },
+  "sec-proj":    { zh: "参与项目", en: "Projects" },
+  "sec-skills":  { zh: "技能",   en: "Skills" },
+  "back-top":    { zh: "回到顶部 ↑", en: "Back to top ↑" }
+};
+
+/* ---- 首屏 ---- */
+const HERO = {
+  name:   { zh: "李聃", en: "Alan Li" },
+  nameEn: { zh: "Alan Li", en: "李聃" },
+  bio: {
+    zh: "材料科学与工程出身，横跨细胞表观遗传重编程、莫尔强关联量子物态与大模型训练评测三个方向。现任金发科技标准化工程师，曾在字节跳动 AI4S 团队实习。",
+    en: "Materials scientist working across epigenetic reprogramming, moiré strongly-correlated quantum states, and LLM training evaluation. Standardization engineer at Kingfa Sci. & Tech.; former AI4S intern at ByteDance."
+  },
+  links: [
+    { text: { zh: "📃 简历 PDF", en: "📃 CV (PDF)" }, href: "resume.pdf" },
+    { text: { zh: "✉️ 邮箱", en: "✉️ Email" }, href: "mailto:1062530693@qq.com" },
+    { text: { zh: "📞 电话", en: "📞 Phone" }, href: "tel:18827264847" }
+  ]
+};
+
+/* ---- 关于我：研究方向（三条，改内容编辑这里） ---- */
+const RESEARCH = [
+  {
+    zh: {
+      title: "细胞表观遗传重编程与视神经节轴突再生",
+      desc: "聚焦哺乳动物视网膜神经节细胞（RGC）损伤后再生能力受限这一核心问题，围绕 OSK 部分重编程重塑 DNA 甲基化与转录组、恢复年轻化表观遗传信息，研究轴突再生的表观遗传调控机制及其在神经退行性疾病治疗中的转化潜力。",
+      tags: ["表观遗传重编程", "OSK / 部分重编程", "RGC 轴突再生", "DNA 甲基化"]
+    },
+    img: "research/rg-reprogramming.png",
+    alt: {
+      zh: "视网膜神经节细胞损伤、命运重编程与轴突再生示意图",
+      en: "Schematic of retinal ganglion cell injury, fate reprogramming and axonal regeneration"
+    },
+    refs: [
+      {
+        zh: "Lu et al., OSK 部分重编程恢复年轻表观遗传信息并重建视功能（ER-100 技术源头）",
+        en: "Lu et al., Reprogramming to recover youthful epigenetic information and restore vision (basis of ER-100)",
+        url: "https://doi.org/10.1038/s41586-020-2975-4"
+      },
+      {
+        zh: "Jorstad et al., Müller 胶质细胞的功能性神经再生诱导（染色质可及性机制）",
+        en: "Jorstad et al., Stimulation of functional neuronal regeneration from Müller glia via chromatin accessibility",
+        url: "https://doi.org/10.1038/nature23283"
+      }
+    ],
+    en: {
+      title: "Epigenetic Reprogramming and Axonal Regeneration of Retinal Ganglion Cells",
+      desc: "Focusing on the limited regenerative capacity of mammalian retinal ganglion cells (RGCs) after injury, we study how OSK partial reprogramming restores youthful DNA methylation and transcriptomes, and dissect the epigenetic regulation of axonal regrowth with translational potential for neurodegenerative disease.",
+      tags: ["Epigenetic reprogramming", "OSK / partial reprogramming", "RGC axon regeneration", "DNA methylation"]
+    }
+  },
+  {
+    zh: {
+      title: "非公度莫尔晶格中的 Kagome 电子晶格态与强关联物态",
+      desc: "以非公度转角过渡金属硫族化物与石墨烯体系为平台，研究莫尔周期势场对电子态的塑造作用：利用转角调控莫尔周期与能带展宽，构筑 Kagome 电子晶格态并考察其在强关联极限下的分数填充关联绝缘态、能带拓扑性与磁性；同时在电子—空穴双层中研究层间库仑拖曳与激子凝聚等集体玻色行为及其向量子霍尔绝缘体的相变。",
+      tags: ["Kagome 电子晶格态", "强关联电子", "分数填充", "库仑拖曳 / 激子凝聚"]
+    },
+    img: "research/moire-correlation.png",
+    alt: {
+      zh: "Kagome 晶格、能带色散与转角莫尔超晶格示意图",
+      en: "Schematic of kagome lattice, band dispersion and twisted moiré superlattice"
+    },
+    refs: [
+      {
+        zh: "Wang, Lei, Qi & Felser, Kagome 拓扑材料综述：磁阻挫、拓扑能带与强关联（npj Quantum Mater.）",
+        en: "Wang, Lei, Qi & Felser, Intriguing kagome topological materials: frustration, topology and correlations (npj Quantum Mater.)",
+        url: "https://doi.org/10.1038/s41535-025-00790-3"
+      },
+      {
+        zh: "Qi, Joe & Wang, 激子绝缘体中的完美库仑拖曳与激子输运（Wang 组，Science）",
+        en: "Qi, Joe & Wang, Perfect Coulomb drag and exciton transport in an excitonic insulator (Wang group, Science)",
+        url: "https://doi.org/10.1126/science.adl1839"
+      },
+      {
+        zh: "Qi et al., 关联电子-空穴双层中激子绝缘体与量子霍尔态的竞争（Wang 组，Nat. Mater.）",
+        en: "Qi et al., Competition between excitonic insulators and quantum Hall states in correlated electron–hole bilayers (Wang group, Nat. Mater.)",
+        url: "https://doi.org/10.1038/s41563-025-02316-5"
+      },
+      {
+        zh: "Regan et al., WSe2/WS2 莫尔超晶格中的 Mott 态与广义 Wigner 晶体",
+        en: "Regan et al., Mott and generalized Wigner crystal states in WSe2/WS2 moiré superlattices",
+        url: "https://doi.org/10.1038/s41586-020-2092-4"
+      }
+    ],
+    en: {
+      title: "Kagome Electronic Lattices and Strongly Correlated States in Incommensurate Moiré Superlattices",
+      desc: "Working in incommensurate twisted TMD and graphene systems, we study how the moiré periodic potential reshapes electronic states: tuning twist to engineer moiré length scales and band widths, realizing kagome electronic lattice states and probing fractional-filling correlated insulators, band topology and magnetism in the strongly correlated regime; in parallel, we examine interlayer Coulomb drag, exciton condensation and associated transitions toward quantum Hall insulators in electron–hole bilayers.",
+      tags: ["Kagome electronic lattice", "Strong correlations", "Fractional filling", "Coulomb drag / exciton condensate"]
+    }
+  },
+  {
+    zh: {
+      title: "大模型强化后训练与污染感知的能力评测",
+      desc: "面向豆包、通义千问等主流中文大模型，研究强化学习驱动的后训练范式在能力对齐中的作用，并构建污染感知的 Benchmark 评测流程——通过检索式重叠分析、掩码填充式探测（如 TS-Guessing）等协议量化训练-评测数据污染程度，为训练数据分级与验收标准提供可复现、可追溯的判定依据。",
+      tags: ["强化学习后训练", "Benchmark 污染检测", "豆包 / 通义千问", "数据质量验收"]
+    },
+    img: "research/llm-posttraining.png",
+    alt: {
+      zh: "大模型强化后训练回路与 Benchmark 污染检测流程示意图",
+      en: "Schematic of RL post-training loop and benchmark contamination detection"
+    },
+    refs: [
+      {
+        zh: "Deng et al., 现代 Benchmark 中的数据污染研究与 TS-Guessing 协议",
+        en: "Deng et al., Investigating data contamination in modern benchmarks (TS-Guessing protocol)",
+        url: "https://arxiv.org/abs/2311.09783"
+      },
+      {
+        zh: "Shi et al., 从大模型中检测预训练数据（成员推断）",
+        en: "Shi et al., Detecting pretraining data from large language models (membership inference)",
+        url: "https://arxiv.org/abs/2310.16789"
+      }
+    ],
+    en: {
+      title: "Reinforcement Post-training and Contamination-Aware Evaluation of LLMs",
+      desc: "Targeting leading Chinese LLMs such as Doubao and Qwen, we study reinforcement-learning-driven post-training for capability alignment and build contamination-aware benchmarking pipelines — quantifying train–test overlap via retrieval-based analysis and mask-filling probes such as TS-Guessing — to support reproducible and traceable data grading and acceptance criteria.",
+      tags: ["RL post-training", "Benchmark contamination", "Doubao / Qwen", "Data acceptance"]
+    }
+  }
+];
+
+/* ---- 教育背景（新增：复制一段改内容） ---- */
+const EDU = [
+  {
+    when: { zh: "2023 — 2026", en: "2023 — 2026" },
+    what: { zh: "<b>湖南大学</b> · 硕士", en: "<b>Hunan University</b> · M.Eng." },
+    role: { zh: "信息功能材料", en: "Information & Functional Materials" },
+    desc: { zh: "GPA 3.58/4.0（前 10%）· 二维转角异质结量子物态", en: "GPA 3.58/4.0 (top 10%) · quantum states in twisted 2D heterostructures" }
+  },
+  {
+    when: { zh: "2019 — 2023", en: "2019 — 2023" },
+    what: { zh: "<b>河南工业大学</b> · 本科", en: "<b>Henan Univ. of Technology</b> · B.Eng." },
+    role: { zh: "高分子材料", en: "Polymer Materials" },
+    desc: { zh: "GPA 3.53/4.0（前 15%）· 纤维增强复合材料", en: "GPA 3.53/4.0 (top 15%) · fiber-reinforced composites" }
+  }
+];
+
+/* ---- 研究与工作经历（每条一句话，新增：复制一段） ---- */
+const EXP = [
+  {
+    when: { zh: "2026.07 — 至今", en: "2026.07 — now" },
+    what: { zh: "<b>金发科技</b>", en: "<b>Kingfa Sci. & Tech.</b>" },
+    role: { zh: "标准化工程师", en: "Standardization Engineer" },
+    desc: { zh: "装置能耗管控清单、能耗核算模板与 SOP 体系建设", en: "Plant energy management lists, accounting templates and SOP systems" }
+  },
+  {
+    when: { zh: "2025.06 — 2026.07", en: "2025.06 — 2026.07" },
+    what: { zh: "<b>字节跳动</b> · AI4S", en: "<b>ByteDance</b> · AI4S" },
+    role: { zh: "STEM 专家计划组 实习生", en: "Intern, STEM Expert Program" },
+    desc: { zh: "训练数据质量评估、Benchmark 污染检测、Lean 4 定理证明数据", en: "Training-data quality evaluation, benchmark contamination detection, Lean 4 theorem-proving data" }
+  },
+  {
+    when: { zh: "2026.04 — 2026.07", en: "2026.04 — 2026.07" },
+    what: { zh: "<b>清华大学深圳国际研究生院</b>", en: "<b>Tsinghua SIGS</b>" },
+    role: { zh: "实验助理（双螺旋中心）", en: "Research Assistant, Double-Helix Center" },
+    desc: { zh: "SPM 表征二维材料与生物分子界面；转角 TMD 手性光学", en: "SPM study of 2D material–biomolecule interfaces; chiral optics of twisted TMDs" }
+  },
+  {
+    when: { zh: "2023.10 — 2026.04", en: "2023.10 — 2026.04" },
+    what: { zh: "<b>湖南大学分析测试中心</b>", en: "<b>HNU Analytical Testing Center</b>" },
+    role: { zh: "科研助理", en: "Research Assistant" },
+    desc: { zh: "Raman / PL / SHG / TAS 光谱与 SEM / SPM / STEM 表征支持", en: "Raman / PL / SHG / TAS spectroscopy and SEM / SPM / STEM support" }
+  }
+];
+
+/* ---- 参与项目（极简一行式） ---- */
+const PROJECTS = [
+  {
+    when: { zh: "2024 — 2026", en: "2024 — 2026" },
+    what: { zh: "<b>硅基低维半导体三维异质光电集成</b>", en: "<b>3D optoelectronic integration of Si-based low-dimensional semiconductors</b>" },
+    role: { zh: "国家重点研发计划", en: "National Key R&D Program" },
+    desc: { zh: "光学系统搭建；CVD 铁电材料与非易失性存储器件", en: "Optical setups; CVD-grown ferroelectrics for non-volatile memory" }
+  },
+  {
+    when: { zh: "2023 — 2026", en: "2023 — 2026" },
+    what: { zh: "<b>二维原子晶体异质结可控制备与光电集成</b>", en: "<b>Controllable growth & optoelectronic integration of 2D heterostructures</b>" },
+    role: { zh: "国家自然科学基金重点项目", en: "NSFC Key Program" },
+    desc: { zh: "转角 WSe2/WS2 异质结；莫尔势垒反转与 Kagome 电子态", en: "Twisted WSe2/WS2; moiré barrier inversion and Kagome electronic lattice" }
+  },
+  {
+    when: { zh: "2023 — 至今", en: "2023 — now" },
+    what: { zh: "<b>莫尔超晶格激子光物理特性</b>", en: "<b>Exciton photophysics of moiré superlattices</b>" },
+    role: { zh: "国家重点研发计划纳米前沿专项", en: "National Key R&D Nano-frontier Program" },
+    desc: { zh: "非公度莫尔激子、激子-声子共振；应变调控各向异性", en: "Incommensurate moiré excitons, exciton–phonon resonance; strain-engineered anisotropy" }
+  }
+];
+
+/* ---- 论文（★ 新增论文：复制一段改内容。
+        url 填 DOI/出版社链接；没有写 "" 则标题不可点；
+        status: "published" 或 "review"（在审）；
+        img 填图形摘要图片路径，没有写 ""；
+        （论文列表与图形摘要在 publications.html，本页不再重复展示） ---- */
+const PUBS = [
+  {
+    title: "Energy Barrier Inversion and Kagome Electronic Lattice Induced by Incommensurate Moiré Reconstruction",
+    authors: ["Dan Li", "et al."],
+    venue: "Nature Communications",
+    year: "2026",
+    url: "",
+    status: "review",
+    tag: { zh: "一作 · 中科院一区 Top", en: "First author · CAS Q1 Top" },
+    img: "",
+    summary: {
+      zh: "在转角 WSe2/WS2 异质结中发现非公度莫尔重构可诱导莫尔势能垒反转与激子圆偏振切换，并在特定转角下形成 Kagome 电子态晶格。",
+      en: "Uncovering incommensurate moiré reconstruction that inverts the moiré potential barrier, switches exciton circular polarization, and hosts a Kagome electronic lattice in twisted WSe2/WS2 heterostructures."
+    }
+  },
+  {
+    title: "Synthesis and Intrinsic Out-of-Plane Ferroelectricity of 2D Bi2SiO5",
+    authors: ["Di Wang", "Yingying Liu", "Hongmei Zhang", "Dan Li", "et al."],
+    venue: "Nano Research",
+    year: "2026",
+    url: "https://doi.org/10.26599/NR.2025.94908068",
+    status: "published",
+    tag: { zh: "二作 · 中科院一区 Top", en: "2nd author · CAS Q1 Top" },
+    img: "papers/pub-bi2sio5.jpg",
+    summary: {
+      zh: "以 CVD 合成二维 Bi2SiO5 纳米片，经 SHG 与 PFM 验证其本征面外铁电性，并在垂直器件中实现铁电开关，拓展了二维铁电材料家族。",
+      en: "CVD-grown 2D Bi2SiO5 nanosheets with intrinsic out-of-plane ferroelectricity verified by SHG and PFM, and ferroelectric switching demonstrated in vertical devices."
+    }
+  },
+  {
+    title: "Synthesis of Two-Dimensional Antiferromagnetic Semiconductor CuFeS2 with a High Néel Temperature",
+    authors: ["Di Wang", "Yingying Liu", "Hua Zhang", "Yong Liu", "Dan Li", "et al."],
+    venue: "Nano Letters, 25(14), 5925–5931",
+    year: "2025",
+    url: "https://doi.org/10.1021/acs.nanolett.5c01088",
+    status: "published",
+    tag: { zh: "五作 · JCR 一区 Top", en: "5th author · JCR Q1 Top" },
+    img: "papers/pub-cufes2.jpg",
+    summary: {
+      zh: "CVD 合成二维反铁磁半导体 CuFeS2，奈尔温度高达 473 K 且空气稳定，Raman 与 SHG 证实反铁磁序，为高温自旋电子学提供新材料平台。",
+      en: "CVD-grown 2D antiferromagnetic semiconductor CuFeS2 with a Néel temperature of 473 K and good air stability, offering a platform for high-temperature spintronics."
+    }
+  },
+  {
+    title: "Strain Engineering of Emergent Anisotropic Responses in WSe2 Monolayer",
+    authors: ["Yang Du", "Yuhao Kong", "Dan Li", "et al."],
+    venue: "Nano Research",
+    year: "2026",
+    url: "https://doi.org/10.26599/NR.2026.94908725",
+    status: "published",
+    tag: { zh: "合作 · 中科院一区 Top", en: "Co-author · CAS Q1 Top" },
+    img: "papers/pub-wse2.jpg",
+    summary: {
+      zh: "用 SiO2 纳米棒直径调控单层 WSe2 应变，实现可调偏振发光并意外发现面内铁电性；异质结探测器具备宽谱响应与可调二向色比。",
+      en: "SiO2-nanorod strain tuning of monolayer WSe2 yields tunable polarized emission and unexpected in-plane ferroelectricity, enabling broadband polarization-sensitive photodetectors."
+    }
+  }
+];
+
+/* ---- 技能标签（直接改列表） ---- */
+const SKILLS = [
+  "Raman / SERS / TERS", "PL / TRPL / CD-PL", "SHG", "TAS (pump-probe)", "FTIR",
+  "SEM / FIB / EBSD", "AFM / STM / KPFM", "STEM-EELS", "CVD 生长", "机械剥离",
+  "二维异质结搭建", "Lean 4", "Benchmark 污染检测", "Python", "CET-6"
+];
+
+/* ---- 联系方式已并入 HERO.links（邮箱/电话），不再单独维护 ---- */
+
+const FOOTER = { zh: "© 2026 李聃 Alan Li", en: "© 2026 Alan Li (李聃)" };
+
+/* ================================================================
+   下面是渲染与交互逻辑，不用改
+   ================================================================ */
+(function () {
+  "use strict";
+  var LANG_KEY = "alan-site-lang";
+  var lang = "zh";
+  try { lang = localStorage.getItem(LANG_KEY) || "zh"; } catch (e) {}
+  if (lang !== "zh" && lang !== "en") lang = "zh";
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function pick(o) { return (o && typeof o === "object" && (o.zh !== undefined)) ? (lang === "zh" ? o.zh : o.en) : o; }
+
+  function render() {
+    document.documentElement.setAttribute("lang", lang === "zh" ? "zh-CN" : "en");
+    document.getElementById("langToggle").textContent = lang === "zh" ? "EN" : "中";
+
+    /* 固定文案 */
+    document.querySelectorAll("[data-i18n]").forEach(function (n) {
+      var k = n.getAttribute("data-i18n");
+      if (UI[k]) n.textContent = pick(UI[k]);
+    });
+
+    /* 首屏 */
+    document.getElementById("navName").textContent = lang === "zh" ? "李聃 Alan Li" : "Alan Li 李聃";
+    document.getElementById("heroName").innerHTML = esc(pick(HERO.name)) + '<span class="en">' + esc(pick(HERO.nameEn)) + "</span>";
+    document.getElementById("heroBio").textContent = pick(HERO.bio);
+    document.getElementById("avatarInitials").textContent = lang === "zh" ? "聃" : "AL";
+    var hl = document.getElementById("heroLinks");
+    hl.innerHTML = "";
+    HERO.links.forEach(function (l) {
+      var a = document.createElement("a");
+      a.href = l.href;
+      if (l.href.indexOf("mailto:") !== 0 && l.href.indexOf("tel:") !== 0) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+      a.textContent = pick(l.text);
+      hl.appendChild(a);
+    });
+
+    /* 关于 */
+    /* 研究方向卡片 */
+    document.getElementById("researchList").innerHTML = RESEARCH.map(function (r, i) {
+      var t = lang === "zh" ? r.zh : r.en;
+      var tags = t.tags.map(function (g) { return "<span>" + esc(g) + "</span>"; }).join("");
+      var fig = r.img
+        ? '<div class="r-fig"><img src="' + esc(r.img) + '" alt="' + esc(lang === "zh" ? r.alt.zh : r.alt.en) + '" loading="lazy" /></div>'
+        : "";
+      var refs = (r.refs && r.refs.length)
+        ? '<div class="r-refs"><div class="ref-h">' + (lang === "zh" ? "代表文献 · KEY REFERENCES" : "Key references") + "</div>" +
+          r.refs.map(function (rf) {
+            return '<a href="' + esc(rf.url) + '" target="_blank" rel="noopener noreferrer">' +
+              esc(lang === "zh" ? rf.zh : rf.en) + "</a>";
+          }).join("") + "</div>"
+        : "";
+      return '<article class="rcard reveal">' +
+        '<div class="r-text">' +
+        '<span class="r-idx">' + (i + 1) + "</span>" +
+        '<h3 class="r-title">' + esc(t.title) + "</h3>" +
+        '<p class="r-desc">' + esc(t.desc) + "</p>" +
+        '<div class="r-tags">' + tags + "</div>" +
+        refs +
+        "</div>" + fig + "</article>";
+    }).join("");
+
+    /* 通用列表渲染 */
+    function renderList(id, arr) {
+      document.getElementById(id).innerHTML = arr.map(function (it) {
+        return '<div class="item"><span class="when">' + esc(pick(it.when)) + '</span>' +
+          '<div class="what"><b>' + pick(it.what) + "</b>" +
+          (it.role ? ' · <span class="role">' + esc(pick(it.role)) + "</span>" : "") +
+          (it.desc ? '<div class="desc">' + esc(pick(it.desc)) + "</div>" : "") +
+          "</div></div>";
+      }).join("");
+    }
+    renderList("eduList", EDU);
+    renderList("expList", EXP);
+    renderList("projList", PROJECTS);
+
+    /* 技能 */
+    document.getElementById("skillTags").innerHTML = SKILLS.map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("");
+
+    document.getElementById("footerText").textContent = pick(FOOTER);
+    initReveal();
+    bindSpy();
+  }
+
+  /* 语言切换 */
+  document.getElementById("langToggle").addEventListener("click", function () {
+    lang = lang === "zh" ? "en" : "zh";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    render();
+  });
+
+  /* 主题切换 */
+  var THEME_KEY = "alan-site-theme";
+  function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem(THEME_KEY, t); } catch (e) {} }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (saved === "dark" || saved === "light") applyTheme(saved);
+    else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) applyTheme("dark");
+  })();
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+
+  /* 导航高亮 */
+  var spyBound = false;
+  function bindSpy() {
+    if (spyBound) return;
+    spyBound = true;
+    var links = Array.prototype.slice.call(document.querySelectorAll(".nav-link"));
+    window.addEventListener("scroll", function () {
+      var pos = window.scrollY + 140, cur = "";
+      links.forEach(function (l) {
+        var sec = document.querySelector(l.getAttribute("href"));
+        if (sec && sec.offsetTop <= pos) cur = l.getAttribute("href");
+      });
+      links.forEach(function (l) { l.classList.toggle("active", l.getAttribute("href") === cur); });
+    }, { passive: true });
+  }
+
+  /* 入场动画：必须在 render() 之后执行，
+     否则动态生成的卡片（研究方向）扫不到，会一直停在 opacity:0 */
+  function initReveal() {
+    var targets = document.querySelectorAll(".reveal:not(.visible)");
+    if ("IntersectionObserver" in window) {
+      var ob = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); ob.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      targets.forEach(function (t) { ob.observe(t); });
+    } else {
+      targets.forEach(function (t) { t.classList.add("visible"); });
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2D Bi2SiO5 Ferroelectricity · 李聃 Alan Li</title>
+<style>
+:root {
+  --bg: #fdfdfc; --surface: #ffffff; --text: #1c1e26; --soft: #4a4f5e;
+  --muted: #828897; --border: #e8e8e3; --accent: #2f5fd0; --accent-soft: rgba(47,95,208,.08);
+  --nav-h: 58px;
+  --serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #131417; --surface: #1b1d22; --text: #e7e8ec; --soft: #c0c4cf;
+  --muted: #8a90a0; --border: #2b2e36; --accent: #7da2ff; --accent-soft: rgba(125,162,255,.12);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.8; font-size:15.5px; transition:background .3s,color .3s; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; text-underline-offset:3px; }
+.wrap { max-width:820px; margin:0 auto; padding:0 22px; }
+.nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:820px; margin:0 auto; height:100%; padding:0 22px; display:flex; align-items:center; justify-content:space-between; }
+.back { font-size:.88rem; font-weight:600; color:var(--soft); }
+.back:hover { color:var(--accent); text-decoration:none; }
+.nav-right { display:flex; gap:8px; }
+.nav-btn { padding:5px 12px; font-size:.8rem; font-weight:600; color:var(--soft); background:transparent; border:1px solid var(--border); border-radius:999px; cursor:pointer; font-family:var(--sans); }
+.nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+article { padding:calc(var(--nav-h) + 40px) 0 60px; }
+.p-venue { font-size:.82rem; font-weight:600; color:var(--accent); letter-spacing:.04em; margin-bottom:10px; }
+h1 { font-family:var(--serif); font-size:1.6rem; line-height:1.45; margin-bottom:12px; }
+.pills { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+.pill { font-size:.74rem; font-weight:600; padding:3px 12px; border-radius:999px; background:var(--accent-soft); color:var(--accent); }
+.pill.review { background:rgba(217,119,6,.1); color:#d97706; }
+.authors { font-size:.9rem; color:var(--muted); margin-bottom:4px; }
+.authors .me { color:var(--accent); font-weight:700; }
+.venue-line { font-size:.9rem; color:var(--soft); font-style:italic; margin-bottom:20px; }
+.ext-link { display:inline-flex; align-items:center; gap:6px; font-size:.88rem; font-weight:600; color:var(--accent); border:1px solid var(--accent); padding:8px 18px; border-radius:999px; margin-bottom:26px; transition:all .2s; }
+.ext-link:hover { background:var(--accent); color:#fff; text-decoration:none; }
+.ext-link.disabled { color:var(--muted); border-color:var(--border); pointer-events:none; }
+figure { margin:0 0 30px; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--surface); }
+figure img { display:block; width:100%; height:auto; }
+figcaption { padding:10px 16px; font-size:.8rem; color:var(--muted); border-top:1px solid var(--border); }
+h2 { font-family:var(--serif); font-size:1.15rem; margin:26px 0 10px; padding-left:12px; border-left:3px solid var(--accent); }
+h2 .h-en { font-family:var(--sans); font-size:.75rem; font-weight:500; color:var(--muted); margin-left:8px; letter-spacing:.05em; text-transform:uppercase; }
+section p { color:var(--soft); font-size:.95rem; text-align:justify; }
+.l-en { display:none; }
+html[data-lang="en"] .l-zh { display:none; }
+html[data-lang="en"] .l-en { display:block; }
+footer { border-top:1px solid var(--border); padding:22px 0 30px; margin-top:30px; color:var(--muted); font-size:.84rem; display:flex; justify-content:space-between; }
+@media (max-width:640px) { h1 { font-size:1.32rem; } }
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-inner">
+  <a href="../publications.html" class="back"><span class="l-zh">← 返回论文列表</span><span class="l-en">← Publications</span></a>
+  <div class="nav-right">
+    <button class="nav-btn" id="langToggle">EN</button>
+    <button class="nav-btn" id="themeToggle">◐</button>
+  </div>
+</div></header>
+<main class="wrap"><article>
+  <p class="p-venue">NANO RESEARCH · 2026</p>
+  <h1>Synthesis and Intrinsic Out-of-Plane Ferroelectricity of 2D Bi2SiO5</h1>
+  <div class="pills"><span class="pill"><span class="l-zh">第二作者</span><span class="l-en">2nd author</span></span><span class="pill"><span class="l-zh">中科院一区 Top</span><span class="l-en">CAS Q1 Top</span></span></div>
+  <p class="authors">Di Wang, Yingying Liu, Hongmei Zhang, <span class="me">Dan Li</span>, Hua Zhang, Liqiang Zhang, Shanhao Li, Miaomiao Liu, Zhihui Chen*, Xidong Duan*</p>
+  <p class="venue-line">Nano Research, 2026 · DOI: 10.26599/NR.2025.94908068</p>
+  <a class="ext-link" href="https://doi.org/10.26599/NR.2025.94908068" target="_blank" rel="noopener noreferrer"><span class="l-zh">查看原文 ↗</span><span class="l-en">Read the paper ↗</span></a>
+  <figure>
+    <img src="pub-bi2sio5.jpg" alt="Graphical abstract" />
+    <figcaption><span class="l-zh">图形摘要（来源：期刊官网）</span><span class="l-en">Graphical abstract (source: publisher)</span></figcaption>
+  </figure>
+  <section>
+    <h2><span class="l-zh">研究背景</span><span class="l-en">Background</span></h2>
+    <p class="l-zh">二维铁电材料兼具原子级厚度与自发极化，是构建微型化、低功耗、高密度非易失性存储器件的理想候选。然而随着厚度减薄，退极化效应会显著抑制铁电性，使得本征二维铁电体（尤其是面外极化体系）极为稀缺。</p>
+    <p class="l-en">Two-dimensional ferroelectric materials, combining atomic-scale thickness with spontaneous polarization, are ideal candidates for miniaturized, low-power, high-density non-volatile memory. However, ferroelectricity is often suppressed by depolarization effects as thickness decreases, making intrinsic 2D ferroelectrics—especially those with out-of-plane polarization—extremely scarce.</p>
+  </section>
+  <section>
+    <h2><span class="l-zh">研究方法</span><span class="l-en">Methods</span></h2>
+    <p class="l-zh">通过化学气相沉积（CVD）合成二维 Bi2SiO5（BSO）纳米片；利用角分辨偏振拉曼（ARPRS）与二次谐波（SHG）确认其非中心对称晶体结构；借助压电力显微镜（PFM）观测可翻转极化与铁电回滞回线，并进一步构建垂直器件验证铁电开关行为。</p>
+    <p class="l-en">2D Bi2SiO5 (BSO) nanosheets were synthesized by chemical vapor deposition (CVD). Their non-centrosymmetric structure was confirmed by angle-resolved polarized Raman spectroscopy (ARPRS) and second-harmonic generation (SHG). Switchable polarization and ferroelectric hysteresis loops were revealed by piezoresponse force microscopy (PFM), and ferroelectric switching was further validated in a vertical device.</p>
+  </section>
+  <section>
+    <h2><span class="l-zh">主要结论</span><span class="l-en">Conclusions</span></h2>
+    <p class="l-zh">实验证实了二维 BSO 的本征面外铁电性，显著扩展了二维铁电材料家族，为其在非易失性存储及存算一体器件中的应用奠定了基础。</p>
+    <p class="l-en">The intrinsic out-of-plane ferroelectricity of 2D BSO is experimentally established, significantly expanding the 2D ferroelectric family and paving the way for its integration into non-volatile memory and in-memory computing devices.</p>
+  </section>
+  <footer>
+    <span>© 2026 李聃 Alan Li</span>
+    <a href="../index.html"><span class="l-zh">返回主页</span><span class="l-en">Back to homepage</span></a>
+  </footer>
+</article></main>
+<script>
+(function () {
+  var LANG_KEY = "alan-site-lang", THEME_KEY = "alan-site-theme";
+  var lang = "zh";
+  try { lang = localStorage.getItem(LANG_KEY) || "zh"; } catch (e) {}
+  if (lang !== "zh" && lang !== "en") lang = "zh";
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.setAttribute("data-lang", l);
+    document.documentElement.setAttribute("lang", l === "zh" ? "zh-CN" : "en");
+    document.getElementById("langToggle").textContent = l === "zh" ? "EN" : "中";
+    try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+  }
+  applyLang(lang);
+  document.getElementById("langToggle").addEventListener("click", function () {
+    applyLang(lang === "zh" ? "en" : "zh");
+  });
+  function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem(THEME_KEY, t); } catch (e) {} }
+  var saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+  if (saved === "dark" || saved === "light") applyTheme(saved);
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) applyTheme("dark");
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+})();
+</script>
+</body>
+</html>

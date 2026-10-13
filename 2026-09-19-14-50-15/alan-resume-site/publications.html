@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>论文发表 Publications · 李聃 Alan Li</title>
+<meta name="description" content="李聃（Alan Li）的论文发表列表与详情入口" />
+<style>
+:root {
+  --bg: #fdfdfc; --surface: #ffffff; --text: #1c1e26; --soft: #4a4f5e;
+  --muted: #828897; --border: #e8e8e3; --accent: #2f5fd0; --accent-soft: rgba(47,95,208,.08);
+  --radius: 12px; --nav-h: 58px;
+  --serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #131417; --surface: #1b1d22; --text: #e7e8ec; --soft: #c0c4cf;
+  --muted: #8a90a0; --border: #2b2e36; --accent: #7da2ff; --accent-soft: rgba(125,162,255,.12);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.75; font-size:15.5px; transition:background .3s,color .3s; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; text-underline-offset:3px; }
+.wrap { max-width:840px; margin:0 auto; padding:0 22px; }
+
+/* 导航 */
+.nav { position:fixed; top:0; left:0; right:0; height:var(--nav-h); z-index:100; background:color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:840px; margin:0 auto; height:100%; padding:0 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.nav-name { font-family:var(--serif); font-weight:700; font-size:1.02rem; color:var(--text); }
+.nav-name:hover { text-decoration:none; color:var(--accent); }
+.nav-right { display:flex; align-items:center; gap:4px; }
+.nav-link { padding:6px 11px; font-size:.88rem; color:var(--muted); border-radius:8px; }
+.nav-link:hover { color:var(--text); background:var(--accent-soft); text-decoration:none; }
+.nav-btn { margin-left:6px; padding:5px 12px; font-size:.8rem; font-weight:600; color:var(--soft); background:transparent; border:1px solid var(--border); border-radius:999px; cursor:pointer; font-family:var(--sans); transition:all .2s; }
+.nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+/* 页头 */
+.page-head { padding:calc(var(--nav-h) + 44px) 0 10px; }
+.page-head h1 { font-family:var(--serif); font-size:1.9rem; margin-bottom:8px; }
+.page-head h1 .en-sub { font-family:var(--sans); font-size:.9rem; font-weight:500; color:var(--muted); margin-left:12px; letter-spacing:.08em; text-transform:uppercase; }
+.page-head .desc { color:var(--muted); font-size:.94rem; max-width:46em; }
+
+/* 论文列表（与主页一致的条目风格） */
+.pub-list { padding:18px 0 30px; }
+.pub { padding:20px 0; border-bottom:1px dashed var(--border); }
+.pub:last-child { border-bottom:none; }
+.pub-main { display:grid; grid-template-columns:1fr 200px; gap:22px; align-items:start; }
+.pub-main:not(:has(.pub-fig)) { grid-template-columns:1fr; }
+.pub .p-title { font-weight:600; font-size:1rem; line-height:1.55; }
+.pub .p-title a { color:var(--text); }
+.pub .p-title a:hover { color:var(--accent); }
+.pub .p-meta { font-size:.85rem; color:var(--muted); margin-top:3px; }
+.pub .p-meta .me { color:var(--accent); font-weight:700; }
+.pub .p-meta .venue { font-style:italic; color:var(--soft); }
+.pill { display:inline-block; font-size:.7rem; font-weight:600; padding:1px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); white-space:nowrap; margin-left:8px; vertical-align:1px; }
+.pill.review { background:rgba(217,119,6,.1); color:#d97706; }
+.pub-summary { font-size:.88rem; color:var(--muted); margin-top:8px; max-width:56em; }
+.p-actions { margin-top:10px; display:flex; gap:16px; align-items:center; }
+.pub-ext { font-size:.82rem; color:var(--muted); }
+.pub-ext:hover { color:var(--accent); }
+.pub-fig { display:block; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface); }
+.pub-fig img { display:block; width:100%; height:132px; object-fit:cover; object-position:center; }
+.pub-fig .fig-fallback { display:none; }
+.pub-fig.noimg { height:132px; display:grid; place-items:center; }
+.pub-fig.noimg .fig-fallback { display:block; font-size:.78rem; color:var(--muted); padding:0 10px; text-align:center; }
+
+/* 页脚 */
+footer { border-top:1px solid var(--border); padding:26px 0 34px; margin-top:10px; color:var(--muted); font-size:.84rem; display:flex; justify-content:space-between; align-items:center; }
+
+/* 入场动画 */
+.reveal { opacity:0; transform:translateY(16px); transition:opacity .6s,transform .6s; }
+.reveal.visible { opacity:1; transform:none; }
+
+@media (max-width:640px) {
+  .pub-main { grid-template-columns:1fr; }
+  .pub-fig img { height:180px; }
+  .pub-fig.noimg { height:80px; }
+  .nav-link { display:none; }
+  .page-head h1 { font-size:1.55rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name" id="navName"></a>
+    <nav class="nav-right">
+      <a href="index.html" class="nav-link" data-i18n="nav-home"></a>
+      <button class="nav-btn" id="langToggle" title="Switch language / 切换语言">EN</button>
+      <button class="nav-btn" id="themeToggle" title="深色/浅色">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="page-head">
+    <h1><span data-i18n="page-title"></span><span class="en-sub">Publications</span></h1>
+    <p class="desc" data-i18n="page-desc"></p>
+  </div>
+  <div class="pub-list" id="pubList"></div>
+  <footer>
+    <span id="footerText"></span>
+    <a href="index.html" data-i18n="back-home"></a>
+  </footer>
+</main>
+
+<script>
+/* ================================================================
+   ★ 论文数据 —— 与 index.html 中的 PUBS 保持一致，
+     新增/修改论文时两处同步编辑（index.html 首屏预览 + 本页列表）
+   ================================================================ */
+const PUBS = [
+  {
+    title: "Energy Barrier Inversion and Kagome Electronic Lattice Induced by Incommensurate Moiré Reconstruction",
+    authors: ["Dan Li", "et al."],
+    venue: "Nature Communications",
+    year: "2026",
+    url: "",
+    status: "review",
+    tag: { zh: "一作 · 中科院一区 Top", en: "First author · CAS Q1 Top" },
+    img: "",
+    summary: {
+      zh: "在转角 WSe2/WS2 异质结中发现非公度莫尔重构可诱导莫尔势能垒反转与激子圆偏振切换，并在特定转角下形成 Kagome 电子态晶格。",
+      en: "Uncovering incommensurate moiré reconstruction that inverts the moiré potential barrier, switches exciton circular polarization, and hosts a Kagome electronic lattice in twisted WSe2/WS2 heterostructures."
+    }
+  },
+  {
+    title: "Synthesis and Intrinsic Out-of-Plane Ferroelectricity of 2D Bi2SiO5",
+    authors: ["Di Wang", "Yingying Liu", "Hongmei Zhang", "Dan Li", "et al."],
+    venue: "Nano Research",
+    year: "2026",
+    url: "https://doi.org/10.26599/NR.2025.94908068",
+    status: "published",
+    tag: { zh: "二作 · 中科院一区 Top", en: "2nd author · CAS Q1 Top" },
+    img: "papers/pub-bi2sio5.jpg",
+    summary: {
+      zh: "以 CVD 合成二维 Bi2SiO5 纳米片，经 SHG 与 PFM 验证其本征面外铁电性，并在垂直器件中实现铁电开关，拓展了二维铁电材料家族。",
+      en: "CVD-grown 2D Bi2SiO5 nanosheets with intrinsic out-of-plane ferroelectricity verified by SHG and PFM, and ferroelectric switching demonstrated in vertical devices."
+    }
+  },
+  {
+    title: "Synthesis of Two-Dimensional Antiferromagnetic Semiconductor CuFeS2 with a High Néel Temperature",
+    authors: ["Di Wang", "Yingying Liu", "Hua Zhang", "Yong Liu", "Dan Li", "et al."],
+    venue: "Nano Letters, 25(14), 5925–5931",
+    year: "2025",
+    url: "https://doi.org/10.1021/acs.nanolett.5c01088",
+    status: "published",
+    tag: { zh: "五作 · JCR 一区 Top", en: "5th author · JCR Q1 Top" },
+    img: "papers/pub-cufes2.jpg",
+    summary: {
+      zh: "CVD 合成二维反铁磁半导体 CuFeS2，奈尔温度高达 473 K 且空气稳定，Raman 与 SHG 证实反铁磁序，为高温自旋电子学提供新材料平台。",
+      en: "CVD-grown 2D antiferromagnetic semiconductor CuFeS2 with a Néel temperature of 473 K and good air stability, offering a platform for high-temperature spintronics."
+    }
+  },
+  {
+    title: "Strain Engineering of Emergent Anisotropic Responses in WSe2 Monolayer",
+    authors: ["Yang Du", "Yuhao Kong", "Dan Li", "et al."],
+    venue: "Nano Research",
+    year: "2026",
+    url: "https://doi.org/10.26599/NR.2026.94908725",
+    status: "published",
+    tag: { zh: "合作 · 中科院一区 Top", en: "Co-author · CAS Q1 Top" },
+    img: "papers/pub-wse2.jpg",
+    summary: {
+      zh: "用 SiO2 纳米棒直径调控单层 WSe2 应变，实现可调偏振发光并意外发现面内铁电性；异质结探测器具备宽谱响应与可调二向色比。",
+      en: "SiO2-nanorod strain tuning of monolayer WSe2 yields tunable polarized emission and unexpected in-plane ferroelectricity, enabling broadband polarization-sensitive photodetectors."
+    }
+  }
+];
+
+const UI = {
+  "nav-home":   { zh: "返回主页", en: "Home" },
+  "page-title": { zh: "论文发表", en: "Publications" },
+  "page-desc":  { zh: "点击条目标题或「期刊原文」跳转出版社页面；图形摘要为论文视觉概要。", en: "Click a title or \"Publisher page\" to open the journal site; figures are visual summaries of each paper." },
+  "back-home":  { zh: "← 返回主页", en: "← Back to homepage" }
+};
+const FOOTER = { zh: "© 2026 李聃 Alan Li", en: "© 2026 Alan Li (李聃)" };
+
+/* ============ 以下为渲染与交互逻辑，不用改 ============ */
+(function () {
+  "use strict";
+  var LANG_KEY = "alan-site-lang", THEME_KEY = "alan-site-theme";
+  var lang = "zh";
+  try { lang = localStorage.getItem(LANG_KEY) || "zh"; } catch (e) {}
+  if (lang !== "zh" && lang !== "en") lang = "zh";
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function pick(o) { return (o && typeof o === "object" && o.zh !== undefined) ? (lang === "zh" ? o.zh : o.en) : o; }
+
+  function render() {
+    document.documentElement.setAttribute("lang", lang === "zh" ? "zh-CN" : "en");
+    document.getElementById("langToggle").textContent = lang === "zh" ? "EN" : "中";
+    document.getElementById("navName").textContent = lang === "zh" ? "李聃 Alan Li" : "Alan Li 李聃";
+    document.querySelectorAll("[data-i18n]").forEach(function (n) {
+      var k = n.getAttribute("data-i18n");
+      if (UI[k]) n.textContent = pick(UI[k]);
+    });
+
+    document.getElementById("pubList").innerHTML = PUBS.map(function (p) {
+      var title = p.url
+        ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.title) + "</a>"
+        : esc(p.title);
+      var authors = p.authors.map(function (a) { return a === "Dan Li" ? '<span class="me">' + esc(a) + "</span>" : esc(a); }).join(", ");
+      var tag = '<span class="pill' + (p.status === "review" ? " review" : "") + '">' + esc(pick(p.tag)) + (p.status === "review" ? (lang === "zh" ? "（在审）" : " (under review)") : "") + "</span>";
+      var fig = p.img
+        ? '<div class="pub-fig"><img src="' + esc(p.img) + '" alt="' + esc(p.title) + '" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove();" /><span class="fig-fallback">' + (lang === "zh" ? "图形摘要待补充" : "Figure coming soon") + "</span></div>"
+        : "";
+      var summary = p.summary ? '<p class="pub-summary">' + esc(pick(p.summary)) + "</p>" : "";
+      var ext = p.url ? '<a class="pub-ext" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer">' + (lang === "zh" ? "期刊原文 ↗" : "Publisher page ↗") + "</a>" : "";
+      var actions = ext ? '<div class="p-actions">' + ext + "</div>" : "";
+      return '<div class="pub reveal"><div class="pub-main"><div class="pub-text">' +
+        '<div class="p-title">' + title + tag + "</div>" +
+        '<div class="p-meta">' + authors + ' · <span class="venue">' + esc(p.venue) + "</span>, " + esc(p.year) + "</div>" +
+        summary + actions +
+        "</div>" + fig + "</div></div>";
+    }).join("");
+
+    document.getElementById("footerText").textContent = pick(FOOTER);
+    initReveal();
+  }
+
+  document.getElementById("langToggle").addEventListener("click", function () {
+    lang = lang === "zh" ? "en" : "zh";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    render();
+  });
+
+  function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem(THEME_KEY, t); } catch (e) {} }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (saved === "dark" || saved === "light") applyTheme(saved);
+    else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) applyTheme("dark");
+  })();
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    applyTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+
+  function initReveal() {
+    var targets = document.querySelectorAll(".reveal:not(.visible)");
+    if ("IntersectionObserver" in window) {
+      var ob = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); ob.unobserve(e.target); } });
+      }, { threshold: 0.06 });
+      targets.forEach(function (t) { ob.observe(t); });
+    } else {
+      targets.forEach(function (t) { t.classList.add("visible"); });
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
